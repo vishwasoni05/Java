@@ -50,7 +50,7 @@ class CurrentAccount extends Account {
 
 public class BankingSystem {
     public static void main(String[] args) {
-        SavingAccount s = new SavingAccount("Shrey Sir");
+        SavingAccount s = new SavingAccount("Mohak");
         s.display();
         s.withdraw();
         s.deposit();
