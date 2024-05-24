@@ -25,6 +25,7 @@ class ReadWrite {
 
     public void encrypt(String fPForReadingData, String fNForReadingData) {
         String str = "";
+        String str1 = "";
         if (fPForReadingData == null)
                 fPForReadingData = "";
             
@@ -45,6 +46,28 @@ class ReadWrite {
         try {
             fout = new FileWriter("Encrypted.txt");
             fout.write(str);
+            fout.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            fin = new FileReader("Encrypted.txt");
+            int j = 0;
+            while ((j = fin.read()) != -1) {
+                j -= 2;
+                // System.out.print((char)j);
+                str1 = str1 + (char) j;
+            }
+            System.out.println("\nDecrypted data is as follows: "+str1);
+            fin.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            fout = new FileWriter("Decrypted.txt");
+            fout.write(str1);
             fout.close();
         } catch (Exception e) {
             e.printStackTrace();

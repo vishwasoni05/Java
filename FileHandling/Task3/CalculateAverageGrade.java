@@ -13,50 +13,34 @@
 //    - Output: Average grade: 88.17
 
 import java.io.FileReader;
-import java.util.Scanner;
+import java.io.BufferedReader;
 
-class ReadData {
-    FileReader fin = null;
-    String str = "";
-    public void readFile(String folderPath, String fileName) {
+public class CalculateAverageGrade {
+    public static void main(String[] args) {
+        String line, delim = ",";
+        int totalGrades = 0, count = 0;
 
-        if(folderPath == null) folderPath = "";
+        try(BufferedReader br=new BufferedReader(new FileReader("Input3.csv"))){
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] student = line.split(delim);
 
-        try{
-            fin = new FileReader(folderPath + fileName + ".csv");
-            int i = 0;
-            while ((i = fin.read()) != -1) {
-                //     if (i >= 49 && i <= 57) {
-                //         System.out.println((char)i);
-                //    }
-                // str = str + (char) i;
-                System.out.print((char)i);
+                if (student.length == 3) {
+                    int grade = Integer.parseInt(student[2].trim());
+                    totalGrades += grade;
+                    count++;
+                }
             }
-            // System.out.println("String:\n" + str);
-            // System.out.println(str.length());
-            
-            fin.close();
-            System.out.println("\n\nEnd of File.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
+        if (count > 0) {
+            double averageGrade = (double) totalGrades / count;
+            System.out.printf("\n Average Grade:%.2f",averageGrade);
+        } else {
+            System.out.println("No student data found");
+        }
     }
-    
 }
-public class CalculateAverageGrade {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        ReadData fh = new ReadData();
-        String folderPath = null, fileName = null;
 
-        System.out.println("Enter the folderPath if any or leave empty for current directory:");
-        folderPath = sc.nextLine();
-
-        System.out.println("Enter the name of File:");
-        fileName = sc.next();
-
-        fh.readFile(folderPath, fileName);
-    }
-    
-}

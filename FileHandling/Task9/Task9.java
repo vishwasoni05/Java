@@ -2,77 +2,82 @@
 
 //    Test Case:
 //    - Input: text file "input.txt" containing:
-     
-//      banana
-//      apple
-//      orange
-     
+
+//  banana
+//  apple
+//  orange
 
 //    - Output: text file "sorted_output.txt" containing:
-     
+
 //      apple
 //      banana
 //      orange
 
-
-import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Scanner;
+import java.io.FileWriter;
 
-class ReadWrite {
-    FileWriter fout = null;
-    FileReader fin = null;
-
-    public void sortOnData(String fPForReadingData, String fNForReadingData) {
-        String str = "";
-        int count=1;
-        if (fPForReadingData == null)
-                fPForReadingData = "";
-            
-        try {
-            fin = new FileReader(fPForReadingData + fNForReadingData + ".txt");
-                int i = 0;
-                while ((i = fin.read()) != -1) {
-                    str = str + (char) i;
-                    if (i == 10) {
-                        
-                        count++;
-                   }
+public class Task9 {
+    public static void bubbleSort(String[] arr) {
+        int ans;
+        String temp;
+        for (int i = 0; i < 3; i++) {
+            for (int j = i + 1; j < 3; j++) {
+                ans = arr[i].compareTo(arr[j]);
+                if (ans == 1) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
                 }
-            
-            fin.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            }
         }
 
+        FileWriter fout = null;
         try {
-            fout = new FileWriter("SortedData.txt");
-            fout.write(str);
+            fout = new FileWriter("Sorted_output.txt");
+            for (int i = 0; i < 3; i++) {
+                fout.write(arr[i] + "\n");
+            }
             fout.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-}
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader("Sorted_output.txt"))) {
+            System.out.println("Output:");
+            while ((line = br.readLine()) != null) {
+                System.out.println("\t"+line);
 
-public class Task9 {
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        ReadWrite fh = new ReadWrite();
-        String fPForReadingData = null, fNForReadingData = null;
+        String File = "Input.txt";
+        String line;
+        String arr[] = new String[3];
+        int count = 0;
 
-        System.out.println("Enter the folderpath for reading data if any or leave empty for the current directory:");
-        fPForReadingData = sc.nextLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(File))) {
+            while ((line = br.readLine()) != null) {
+                // System.out.println(line);
+                arr[count] = line;
+                count++;
+            }
+            System.out.print("Input:\n");
+            for (int i = 0; i < 3; i++) {
+                System.out.print("\t" + arr[i] + "\n");
+            }
+            bubbleSort(arr);
 
-        System.out.println("Enter the FileName for reading data from it:");
-        fNForReadingData = sc.nextLine();
-
-        
-
-        fh.sortOnData(fPForReadingData, fNForReadingData);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
+}

@@ -15,37 +15,28 @@
 //      Line 3: This is another test file.
 
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.util.Scanner;
 
 class ReadData{
-    FileReader fin = null;
-    int line = 1,l;
-    String str = "";
+    String line;
+    int count = 1;
     CharSequence s = "test";
     public void readFile(String folderPath, String fileName) {
         if (folderPath == null)
             folderPath = "";
-        try{
-            fin=new FileReader(folderPath+fileName+".txt");
-            int i=0;
-            while ((i = fin.read()) != -1) {
-                str = str + (char) i;
-                
-                if (i == 10) {
-                    if (str.contains(s)) {
-                        System.out.println("Line " + line + ": " + str);
-                    }
-                    str = "";
-                    line++;
-
+        try(BufferedReader br=new BufferedReader(new FileReader(folderPath+fileName+".txt"))){
+            while ((line=br.readLine())!=null) {
+                if (line.contains(s)) {
+                        System.out.println("Line " + count + ": " + line);
                 }
-               
-                
+                count++;
             }
             
             
             System.out.println("\n\nEnd of File.");
-            System.out.println("Total lines in file:" + line);
+            
+            
             
         } catch (Exception e) {
             e.printStackTrace();
