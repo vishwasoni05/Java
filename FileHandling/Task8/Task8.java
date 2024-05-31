@@ -9,18 +9,19 @@
 
 //    - Output: Deserialized object: Employee{name="John", age=30, department="IT"}
 
-import java.io.FileReader;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.Serializable;
 
-class Employees {
+class Employee {
     String name;
     int age;
     String department;
 
-    public Employees(String name, int age, String department) {
+    public Employee(String name, int age, String department) {
         this.name = name;
         this.age = age;
         this.department = department;
@@ -30,11 +31,31 @@ class Employees {
 
 public class Task8 {
     public static void main(String[] args) {
-        Employees e1 = new Employees("Jhon", 30, "IT");
-        try(ObjectOutputStream out=new ObjectOutputStream(new ())){
+        Employee emp = new Employee("Jhon", 30, "IT");
 
-        }catch(Exception e){
+        serializeObject(emp, "employee.ser");
+
+        System.out.println(deserializeObject("employee.ser"));
+
+    }
+    
+    public static void serializeObject(Employee emp, String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(emp);
+            System.out.println("Object serialized successfully!");
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Employee deserializeObject(String fileName) {
+        Employee emp = null;
+        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(fileName))){
+            emp = (Employee) ois.readObject();
+            System.out.println("Object deserialized successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return emp;
     }
 }
