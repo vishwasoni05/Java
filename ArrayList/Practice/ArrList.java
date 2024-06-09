@@ -70,7 +70,8 @@ public class ArrList {
         // System.out.println(list);
 
         // list.remove(2);
-        // list.remove("Ram");
+        
+        System.out.println(list.remove("Ram"));
 
         // ArrayList<String> l1 = new ArrayList<>();
         // l1.add("Hanuman");
